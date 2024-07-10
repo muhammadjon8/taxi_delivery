@@ -17,6 +17,7 @@ export class DeliveryOrderService {
       const deliveryOrder = this.deliveryOrderRepository.create(
         createDeliveryOrderDto,
       );
+      console.log(typeof createDeliveryOrderDto.date);
       return this.deliveryOrderRepository.save(deliveryOrder);
     } catch (e) {
       return { error: e.message };
@@ -56,6 +57,9 @@ export class DeliveryOrderService {
       // DeliveryOrder not found, return the error
       return deliveryOrderToRemove;
     }
-    return this.deliveryOrderRepository.remove([deliveryOrderToRemove]);
+    return {
+      message: 'Deleted succeffsully',
+      data: this.deliveryOrderRepository.remove([deliveryOrderToRemove]),
+    };
   }
 }

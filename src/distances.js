@@ -1,6 +1,5 @@
 const distances = {
   Toshkent: {
-    // hello
     Andijon: 350,
     Buxoro: 580,
     Guliston: 115,
