@@ -190,4 +190,4 @@ function getDistance(start, end) {
   }
 }
 
-console.log(getDistance("Toshkent", "Urganch"));
+console.log(getDistance('Toshkent', 'Urganch'));
