@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CarModule } from './car/car.module';
 import { DeliveryOrderModule } from './delivery_order/delivery_order.module';
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { DeliveryOrderModule } from './delivery_order/delivery_order.module';
       logging: false,
     }),
     DeliveryOrderModule,
+    CarModule,
   ],
   controllers: [],
   providers: [],
