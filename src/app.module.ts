@@ -17,7 +17,7 @@ import { TaxiOrder } from './taxi_order/entities/taxi_order.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [Region, District, TaxiOrder],
+      entities: [],
       synchronize: true,
       logging: false,
     }),
