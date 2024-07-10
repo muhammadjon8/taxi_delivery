@@ -4,9 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CarModule } from './car/car.module';
 import { Car } from './car/entities/car.entity';
 import { DeliveryOrderModule } from './delivery_order/delivery_order.module';
-import { DriverModule } from './driver/driver.module';
-import { Driver } from './driver/entities/driver.entity';
-import { DeliveryOrder } from './delivery_order/entities/delivery_order.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
