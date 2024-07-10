@@ -1,26 +1,59 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateCarDto } from './dto/create-car.dto';
 import { UpdateCarDto } from './dto/update-car.dto';
+import { Car } from './entities/car.entity';
 
 @Injectable()
 export class CarService {
-  create(createCarDto: CreateCarDto) {
-    return 'This action adds a new car';
+  constructor(
+    @InjectRepository(Car)
+    private readonly carModelRepository: Repository<Car>,
+  ) {}
+
+  async create(createCarDto: CreateCarDto) {
+    try {
+      const deliveryOrder = this.carModelRepository.create(createCarDto);
+      return this.carModelRepository.save(deliveryOrder);
+    } catch (e) {
+      return { error: e.message };
+    }
   }
 
-  findAll() {
-    return `This action returns all car`;
+  async findAll() {
+    return this.carModelRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} car`;
+  async findOne(id: number) {
+    try {
+      const car = await this.carModelRepository.findOne({
+        where: { id },
+      });
+      if (!car) {
+        throw new NotFoundException(`car with ID ${id} not found`);
+      }
+      return car;
+    } catch (e) {
+      return { error: e.message };
+    }
   }
 
-  update(id: number, updateCarDto: UpdateCarDto) {
-    return `This action updates a #${id} car`;
+  async update(id: number, updateCarDto: UpdateCarDto) {
+    try {
+      await this.carModelRepository.update({ id }, updateCarDto);
+      return this.findOne(id);
+    } catch (e) {
+      return { error: e.message };
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} car`;
+  async remove(id: number) {
+    const carModelRepository = await this.findOne(id);
+    if ('error' in carModelRepository) {
+      // DeliveryOrder not found, return the error
+      return carModelRepository;
+    }
+    return this.carModelRepository.remove([carModelRepository]);
   }
 }

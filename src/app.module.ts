@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CarModule } from './car/car.module';
+import { Car } from './car/entities/car.entity';
 import { DeliveryOrderModule } from './delivery_order/delivery_order.module';
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { DeliveryOrderModule } from './delivery_order/delivery_order.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [],
+      entities: [Car],
       synchronize: true,
       logging: false,
     }),
