@@ -1,7 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+<<<<<<< HEAD
 import { CarModule } from './car/car.module';
+=======
+import { DeliveryOrderModule } from './delivery_order/delivery_order.module';
+>>>>>>> fc37fda84d19ec7774997694c4cfd06adaf71a5d
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
@@ -16,7 +20,11 @@ import { CarModule } from './car/car.module';
       synchronize: true,
       logging: false,
     }),
+<<<<<<< HEAD
     CarModule,
+=======
+    DeliveryOrderModule,
+>>>>>>> fc37fda84d19ec7774997694c4cfd06adaf71a5d
   ],
   controllers: [],
   providers: [],

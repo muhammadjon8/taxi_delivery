@@ -3,10 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 // Import your TypeORM Admin entity
 import { JwtService } from '@nestjs/jwt';
-import { Admin } from './entities/admin.entity';
-import { CreateAdminDto } from './dto/create-admin.dto';
 import * as bcrypt from 'bcrypt';
 import { Response } from 'express';
+import { CreateAdminDto } from './dto/create-admin.dto';
+import { Admin } from './entities/admin.entity';
 
 @Injectable()
 export class AdminService {
@@ -122,7 +122,7 @@ export class AdminService {
 
   async signIn(createAuthDto: CreateAdminDto, res: Response) {
     const admin = await this.adminModel.findOne({
-      where: {login: createAuthDto.login },
+      where: { login: createAuthDto.login },
     });
     if (!admin) {
       throw new BadRequestException('User does not exist');
