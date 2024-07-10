@@ -25,3 +25,9 @@ async function start() {
   });
 }
 start();
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> b02a0e3 (test)
+console.log('Samiya');
