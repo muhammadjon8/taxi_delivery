@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DeliveryOrderModule } from './delivery_order/delivery_order.module';
+import { DriverModule } from './driver/driver.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
@@ -17,6 +18,7 @@ import { DeliveryOrderModule } from './delivery_order/delivery_order.module';
       logging: false,
     }),
     DeliveryOrderModule,
+    DriverModule,
   ],
   controllers: [],
   providers: [],
