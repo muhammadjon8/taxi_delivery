@@ -5,7 +5,8 @@ import { CarModule } from './car/car.module';
 import { Car } from './car/entities/car.entity';
 import { DeliveryOrderModule } from './delivery_order/delivery_order.module';
 import { DriverModule } from './driver/driver.module';
-import { Driver } from './driver/entities/driver.entity'
+import { Driver } from './driver/entities/driver.entity';
+import { DeliveryOrder } from './delivery_order/entities/delivery_order.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
@@ -16,7 +17,7 @@ import { Driver } from './driver/entities/driver.entity'
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      entities: [Car,Driver],
+      entities: [Car, Driver, DeliveryOrder],
       synchronize: true,
       logging: false,
     }),
