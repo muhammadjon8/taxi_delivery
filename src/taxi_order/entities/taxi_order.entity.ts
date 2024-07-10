@@ -18,7 +18,7 @@ export class TaxiOrder {
   user_id:number
 
   @Column()
-  description:Text
+  description:string
 
   @Column()
   location_start:string
