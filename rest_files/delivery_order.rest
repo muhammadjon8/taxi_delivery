@@ -1,0 +1,38 @@
+GET http://localhost:3000/api/delivery-order
+###
+
+POST http://localhost:3000/api/delivery-order
+Content-Type: application/json
+
+{
+    "from_district_id": 1,
+    "to_district_id": 2,
+    "time": "string",
+    "load_name": "string",
+    "load_weight": 50,
+    "date":"2024-09-09", 
+    "load_capacity": "2kvm",
+    "description": "Mebellar oyna bilan jihozlangan, sinmasligi kerak",
+    "recipient_name": "Muhammadjon",
+    "recipient_phone": "+998331006671",
+    "location_start": "Tashkent, Sergili 4",
+    "type": "yuk"
+}
+###
+
+GET http://localhost:3000/api/delivery-order/11
+###
+
+PATCH http://localhost:3000/api/delivery-order/11
+Content-Type: application/json
+
+{
+    "from_district_id": 1,
+    "to_district_id": 2,
+    "time": "string",
+    "load_name": "string",
+    "load_weight": 60
+}
+###
+
+DELETE http://localhost:3000/api/delivery-order/11

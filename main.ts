@@ -1,11 +1,11 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
+import { AppModule } from './src/app.module';
 
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000;
 async function start() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
