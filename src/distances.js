@@ -1,6 +1,5 @@
 const distances = {
   Toshkent: {
-    // hello
     Andijon: 350,
     Buxoro: 580,
     Guliston: 115,
@@ -191,4 +190,4 @@ function getDistance(start, end) {
   }
 }
 
-console.log(getDistance("Toshkent", "Urganch"));
+console.log(getDistance('Toshkent', 'Urganch'));

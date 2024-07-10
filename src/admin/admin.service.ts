@@ -122,7 +122,7 @@ export class AdminService {
 
   async signIn(createAuthDto: CreateAdminDto, res: Response) {
     const admin = await this.adminModel.findOne({
-      where: { phone: createAuthDto.phone },
+      where: {login: createAuthDto.login },
     });
     if (!admin) {
       throw new BadRequestException('User does not exist');

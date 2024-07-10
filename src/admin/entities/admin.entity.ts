@@ -22,7 +22,7 @@ export class Admin {
     description: "Admin's refresh token",
   })
   @Column({ nullable: true })
-  refresh_token: string;
+  refreshToken: string;
 
   @ApiProperty({ description: "Admin's activeness" })
   @Column({ default: true })
