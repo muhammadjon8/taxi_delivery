@@ -18,7 +18,6 @@ import { BalanceModule } from './balance/balance.module';
       logging: false,
     }),
     DeliveryOrderModule,
-    BalanceModule,
   ],
   controllers: [],
   providers: [],
