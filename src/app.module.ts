@@ -13,6 +13,7 @@ import { DriverModule } from './driver/driver.module';
 import { UsersModule } from './users/users.module';
 import { AdminModule } from './admin/admin.module';
 import { Car } from './car/entities/car.entity'
+import { CarDriverModule } from './car_driver/car_driver.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
@@ -33,6 +34,7 @@ import { Car } from './car/entities/car.entity'
     DriverModule,
     UsersModule,
     AdminModule,
+    CarDriverModule,
   ],
   controllers: [],
   providers: [],
