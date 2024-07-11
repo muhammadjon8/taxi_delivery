@@ -17,18 +17,18 @@ export class CarDriverController {
     return this.carDriverService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.carDriverService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.carDriverService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCarDriverDto: UpdateCarDriverDto) {
-    return this.carDriverService.update(+id, updateCarDriverDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateCarDriverDto: UpdateCarDriverDto) {
+  //   return this.carDriverService.update(+id, updateCarDriverDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.carDriverService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.carDriverService.remove(+id);
+  // }
 }

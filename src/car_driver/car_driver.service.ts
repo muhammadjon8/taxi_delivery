@@ -19,19 +19,29 @@ export class CarDriverService {
     return this.carDriverRepo.find();
   }
 
-  findOne(id: number) {
-    return this.carDriverRepo.findOneBy({ id });
-  }
+  // async findOne(id: number) {
+  //   try {
+  //     const driver = await this.carDriverRepo.findOne({
+  //       where: { id },
+  //     });
+  //     if (!driver) {
+  //       throw new NotFoundException(`driver  car with ID ${id} not found`);
+  //     }
+  //     return driver;
+  //   } catch (e) {
+  //     return { error: e.message };
+  //   }
+  // }
 
-  async update(id: number, updateCarDriverDto: UpdateCarDriverDto) {
-    await this.carDriverRepo.update(id, updateCarDriverDto);
-    return this.findOne(id);
-  }
-  async remove(id: number) {
-    const driverModelRepository = await this.findOne(id);
-    if ('error' in driverModelRepository) {
-      return driverModelRepository;
-    }
-    return this.carDriverRepo.remove([driverModelRepository]);
-  }
+  // async update(id: number, updateCarDriverDto: UpdateCarDriverDto) {
+  //   await this.carDriverRepo.update(id, updateCarDriverDto);
+  //   return this.findOne(id);
+  // }
+  // async remove(id: number) {
+  //   const driverModelRepository = await this.findOne(id);
+  //   if ('error' in driverModelRepository) {
+  //     return driverModelRepository;
+  //   }
+  //   return this.carDriverRepo.remove([driverModelRepository]);
+  // }
 }
