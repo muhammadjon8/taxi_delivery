@@ -31,4 +31,6 @@ export class DeliveryOrder {
   type: string;
   @Column({ nullable: true })
   user_id: number;
+  @Column({ nullable: true })
+  distance: string;
 }
