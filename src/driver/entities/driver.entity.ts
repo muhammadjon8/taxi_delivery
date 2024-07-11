@@ -2,7 +2,7 @@ import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @ApiTags('Driver')
-@Entity()
+@Entity("Driver")
 export class Driver {
 
   @ApiProperty({ example: 1, description: "Car 's ID" })

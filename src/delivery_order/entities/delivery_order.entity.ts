@@ -1,6 +1,7 @@
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Type } from 'class-transformer';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+@Entity('delivery_order')
 export class DeliveryOrder {
   @PrimaryGeneratedColumn()
   id: number;
@@ -28,4 +29,6 @@ export class DeliveryOrder {
   location_start: string;
   @Column()
   type: string;
+  @Column({ nullable: true })
+  user_id: number;
 }
