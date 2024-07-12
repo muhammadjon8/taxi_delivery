@@ -1,0 +1,8 @@
+POST http://localhost:3000/api/regions
+Content-Type: application/json
+
+{
+    "name": "Samarkand",
+    "latitude": 39.650088423143096, 
+    "longitude":66.95550887064353
+}

@@ -13,17 +13,17 @@ import { UpdateRegionDto } from './dto/update-region.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('regions')
-@Controller('regions')
+@Controller('region')
 export class RegionsController {
   constructor(private readonly regionsService: RegionsService) {}
 
-  @Post()
   @ApiOperation({ description: 'Yangi hudud yaratish' })
   @ApiResponse({
     status: 201,
     description: 'Hudud muvaffaqiyatli yaratildi.',
   })
-  @ApiResponse({ status: 400, description: 'Xato soʻrov.' })
+  // @ApiResponse({ status: 400, description: 'Xato soʻrov.' })
+  @Post()
   create(@Body() createRegionDto: CreateRegionDto) {
     return this.regionsService.create(createRegionDto);
   }

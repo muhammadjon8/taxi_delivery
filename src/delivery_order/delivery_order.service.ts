@@ -12,6 +12,7 @@ export class DeliveryOrderService {
   constructor(
     @InjectRepository(DeliveryOrder)
     private readonly deliveryOrderRepository: Repository<DeliveryOrder>,
+    @InjectRepository(Region)
     private readonly region: Repository<Region>,
   ) {}
 
