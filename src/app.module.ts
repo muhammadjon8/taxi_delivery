@@ -1,26 +1,26 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CarModule } from './car/car.module';
-import { DeliveryOrderModule } from './delivery_order/delivery_order.module';
-import { DeliveryOrder } from './delivery_order/entities/delivery_order.entity';
-import { Balance } from './balance/entities/balance.entity';
-import { Driver } from './driver/entities/driver.entity';
-import { User } from './users/entities/user.entity';
+import { AdminModule } from './admin/admin.module';
 import { Admin } from './admin/entities/admin.entity';
 import { BalanceModule } from './balance/balance.module';
-import { DriverModule } from './driver/driver.module';
-import { UsersModule } from './users/users.module';
-import { AdminModule } from './admin/admin.module';
+import { Balance } from './balance/entities/balance.entity';
+import { CarModule } from './car/car.module';
 import { Car } from './car/entities/car.entity';
 import { CarDriverModule } from './car_driver/car_driver.module';
-import { Region } from './regions/entities/region.entity';
-import { TaxiOrder } from './taxi_order/entities/taxi_order.entity';
-import { District } from './districts/entities/district.entity';
-import { RegionsModule } from './regions/regions.module';
-import { DistrictsModule } from './districts/districts.module';
-import { TaxiOrderModule } from './taxi_order/taxi_order.module';
 import { CarDriver } from './car_driver/entities/car_driver.entity';
+import { DeliveryOrderModule } from './delivery_order/delivery_order.module';
+import { DeliveryOrder } from './delivery_order/entities/delivery_order.entity';
+import { DistrictsModule } from './districts/districts.module';
+import { District } from './districts/entities/district.entity';
+import { DriverModule } from './driver/driver.module';
+import { Driver } from './driver/entities/driver.entity';
+import { Region } from './regions/entities/region.entity';
+import { RegionsModule } from './regions/regions.module';
+import { TaxiOrder } from './taxi_order/entities/taxi_order.entity';
+import { TaxiOrderModule } from './taxi_order/taxi_order.module';
+import { User } from './users/entities/user.entity';
+import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
@@ -41,6 +41,7 @@ import { CarDriver } from './car_driver/entities/car_driver.entity';
         Balance,
         Admin,
         CarDriver,
+        User,
       ],
       synchronize: true,
       logging: false,
@@ -54,6 +55,7 @@ import { CarDriver } from './car_driver/entities/car_driver.entity';
     AdminModule,
     TaxiOrderModule,
     CarDriverModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],

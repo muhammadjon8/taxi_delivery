@@ -11,7 +11,7 @@ import { BalanceService } from './balance.service';
 import { Balance } from './entities/balance.entity';
 import { ApiTags } from '@nestjs/swagger'
 
-@ApiTags('baclance')
+@ApiTags('balance')
 @Controller('balances')
 export class BalanceController {
   constructor(private readonly balanceService: BalanceService) {}
