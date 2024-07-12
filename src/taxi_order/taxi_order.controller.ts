@@ -1,16 +1,16 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { TaxiOrderService } from './taxi_order.service';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateTaxiOrderDto } from './dto/create-taxi_order.dto';
 import { UpdateTaxiOrderDto } from './dto/update-taxi_order.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { TaxiOrderService } from './taxi_order.service';
 
 @ApiTags('taxi-order')
 @Controller('taxi-order')
