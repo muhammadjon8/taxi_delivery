@@ -38,8 +38,10 @@ export class DeliveryOrderService {
       };
       const response = await axios(config);
       const distance = response.data.rows[0].elements[0].distance.text;
+      const duration = response.data.rows[0].elements[0].duration.text;
       const deliveryOrder = this.deliveryOrderRepository.create({
         distance: distance,
+        duration: duration,
         ...createDeliveryOrderDto,
       });
       return this.deliveryOrderRepository.save(deliveryOrder);

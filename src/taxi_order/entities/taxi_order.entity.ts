@@ -20,7 +20,7 @@ export class TaxiOrder {
     description: 'Buyurtma sanasi',
   })
   @Column()
-	  date: Date;
+  date: Date;
 
   @ApiProperty({ example: 1, description: 'Foydalanuvchi ID' })
   @Column()
@@ -28,11 +28,7 @@ export class TaxiOrder {
 
   @ApiProperty({ example: 'Description text', description: 'Qoʻshimcha izoh' })
   @Column()
-<<<<<<< HEAD
-  description:string
-=======
   description: string;
->>>>>>> f537021 (swagger in entities)
 
   @ApiProperty({ example: 'Start location', description: 'Boshlanish joyi' })
   @Column()

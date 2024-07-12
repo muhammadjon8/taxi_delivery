@@ -1,7 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Decimal128, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
-
+@Entity('region')
 export class Region {
   @ApiProperty({ example: 1, description: 'Yagona identifikatsiya raqami' })
   @PrimaryGeneratedColumn()
@@ -12,8 +12,8 @@ export class Region {
   name: string;
 
   @Column()
-  longitude: number;
+  longitude: string;
 
   @Column()
-  latitude: number;
+  latitude: string;
 }

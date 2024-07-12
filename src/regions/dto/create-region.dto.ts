@@ -11,11 +11,11 @@ export class CreateRegionDto {
     example: '39.650088423143096',
     description: 'longitude',
   })
-  longitude: number;
+  longitude: string;
 
   @ApiProperty({
     example: '66.95550887064353',
     description: 'latitude',
   })
-  latitude: number;
+  latitude: string;
 }

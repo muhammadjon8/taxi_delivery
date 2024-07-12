@@ -5,8 +5,8 @@ POST http://localhost:3000/api/delivery-order
 Content-Type: application/json
 
 {
-    "from_district_id": 1,
-    "to_district_id": 2,
+    "from_district_id": 3,
+    "to_district_id": 4,
     "time": "string",
     "load_name": "string",
     "load_weight": 50,

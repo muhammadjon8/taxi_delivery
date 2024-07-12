@@ -1,8 +1,11 @@
-POST http://localhost:3000/api/regions
+POST http://localhost:3000/api/region
 Content-Type: application/json
 
 {
-    "name": "Samarkand",
-    "latitude": 39.650088423143096, 
-    "longitude":66.95550887064353
+    "name": "Fergana",
+    "latitude": "40.37399148390805", 
+    "longitude":"71.79903997366404"
 }
+###
+
+GET http://localhost:3000/api/regions

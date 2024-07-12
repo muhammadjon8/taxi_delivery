@@ -18,14 +18,14 @@ export class RegionsController {
   constructor(private readonly regionsService: RegionsService) {}
 
   @ApiOperation({ description: 'Yangi hudud yaratish' })
-  @ApiResponse({
-    status: 201,
-    description: 'Hudud muvaffaqiyatli yaratildi.',
-  })
+  // @ApiResponse({
+  //   status: 201,
+  //   description: 'Hudud muvaffaqiyatli yaratildi.',
+  // })
   // @ApiResponse({ status: 400, description: 'Xato soʻrov.' })
   @Post()
   create(@Body() createRegionDto: CreateRegionDto) {
-    return this.regionsService.create(createRegionDto);
+    this.regionsService.create(createRegionDto);
   }
 
   @Get()
