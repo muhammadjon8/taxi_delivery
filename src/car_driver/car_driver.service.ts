@@ -45,7 +45,6 @@ export class CarDriverService {
   async remove(id: number) {
     const car_driverModelRepository = await this.findOne(id);
     if ('error' in car_driverModelRepository) {
-      // DeliveryOrder not found, return the error
       return car_driverModelRepository;
     }
     return this.carDriverRepo.remove([car_driverModelRepository]);
