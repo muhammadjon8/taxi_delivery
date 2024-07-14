@@ -1,7 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity('district')
 export class District {
   @ApiProperty({ example: 1, description: 'Yagona identifikatsiya raqami' })
   @PrimaryGeneratedColumn()

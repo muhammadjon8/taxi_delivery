@@ -1,14 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNotEmpty, IsNumber } from 'class-validator';
-
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+@Entity('car_driver')
 export class CarDriver {
-  @ApiProperty({ example: 2, description: 'driver  in the balance' })
-  @IsNumber()
-  @IsNotEmpty()
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @ApiProperty({ example: 'driver_id', description: 'driver_example' })
+  @Column()
   driver_id: number;
 
-  @ApiProperty({ example: 2, description: 'driver  in the balance' })
-  @IsNumber()
-  @IsNotEmpty()
+  @ApiProperty({ example: 'car_id example', description: 'car_id example' })
+  @Column()
   car_id: number;
 }
