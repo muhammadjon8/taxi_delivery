@@ -1,0 +1,11 @@
+POST http://localhost:3000/api/taxi-order
+Content-Type: application/json
+
+{
+    "from_district_id": 3,
+    "to_district_id": 4,
+    "time": "string",
+    "date":"2024-09-09", 
+    "description": "Konditsioner bo'lsin",
+    "location_start": "Tashkent, Chilanzar 4",
+}

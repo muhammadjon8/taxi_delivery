@@ -5,14 +5,14 @@ POST http://localhost:3000/api/delivery-order
 Content-Type: application/json
 
 {
-    "from_district_id": 3,
-    "to_district_id": 4,
+    "from_district_id": 6,
+    "to_district_id": 11,
     "time": "string",
     "load_name": "string",
     "load_weight": 50,
     "date":"2024-09-09", 
     "load_capacity": "2kvm",
-    "description": "Mebellar oyna bilan jihozlangan, sinmasligi kerak",
+    "description": "Hammasi ok boladi in shaa Allah",
     "recipient_name": "Muhammadjon",
     "recipient_phone": "+998331006671",
     "location_start": "Tashkent, Sergili 4",

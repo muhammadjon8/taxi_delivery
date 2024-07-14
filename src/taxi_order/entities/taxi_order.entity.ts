@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity()
+@Entity('taxi-order')
 export class TaxiOrder {
   @ApiProperty({ example: 1, description: 'Yagona identifikatsiya raqami' })
   @PrimaryGeneratedColumn()
@@ -9,7 +9,7 @@ export class TaxiOrder {
 
   @ApiProperty({ example: 1, description: 'Joʻnash tumani ID' })
   @Column()
-  from_distict_id: number;
+  from_district_id: number;
 
   @ApiProperty({ example: 2, description: 'Boriladigan tumani ID' })
   @Column()
@@ -23,7 +23,7 @@ export class TaxiOrder {
   date: Date;
 
   @ApiProperty({ example: 1, description: 'Foydalanuvchi ID' })
-  @Column()
+  @Column({ nullable: true })
   user_id: number;
 
   @ApiProperty({ example: 'Description text', description: 'Qoʻshimcha izoh' })
@@ -33,4 +33,11 @@ export class TaxiOrder {
   @ApiProperty({ example: 'Start location', description: 'Boshlanish joyi' })
   @Column()
   location_start: string;
+
+  @ApiProperty({ example: '2h', description: 'Davomiyligi' })
+  @Column()
+  duration: string;
+  @ApiProperty({ example: '550km', description: 'Masofasi' })
+  @Column()
+  distance: string;
 }

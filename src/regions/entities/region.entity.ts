@@ -10,10 +10,4 @@ export class Region {
   @ApiProperty({ example: 'Toshkent', description: 'Hudud nomi' })
   @Column()
   name: string;
-
-  @Column()
-  longitude: string;
-
-  @Column()
-  latitude: string;
 }
