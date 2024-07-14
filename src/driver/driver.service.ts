@@ -15,11 +15,11 @@ export class DriverService {
     try {
       const deliveryOrder = this.driverModelRepository.create(createDriverDto);
       return this.driverModelRepository.save(deliveryOrder);
+      console.log('bek');
     } catch (e) {
       return { error: e.message };
     }
   }
-
   findAll() {
     return this.driverModelRepository.find();
   }
