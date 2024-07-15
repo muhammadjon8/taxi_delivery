@@ -6,12 +6,12 @@ export class CreateDriverDto {
   @IsString()
   name: string;
 
-  @ApiProperty({ example: 'suranme example' })
+  @ApiProperty({ example: 'surname example' })
   surname: string;
   @ApiProperty({ example: '23' })
   @IsNumber()
   age: number;
-  @ApiProperty({ example: '+99893 089 -41 -82' })
+  @ApiProperty({ example: '+99893 089-41-82' })
   @IsString()
   phone: string;
   @ApiProperty({ example: 'photo example' })

@@ -17,7 +17,7 @@ export class Balance {
     description: 'Date of transfer',
   })
   @Column()
-  transfer_date: Date;
+  transfer_date: string;
 
   @ApiProperty({
     example: '10.07.2024',

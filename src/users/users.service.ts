@@ -67,12 +67,10 @@ export class UserService {
 
       const tokens = await this.getTokens(user);
 
-      // Update the refresh token in the database
       await this.userRepository.update(user.id, {
         refreshToken: tokens.refreshToken,
       });
 
-      // Set the refresh token as a cookie in the response
       res.cookie('refresh_token', tokens.refreshToken, {
         maxAge: Number(process.env.COOKIE_TIME),
         httpOnly: true,
@@ -107,12 +105,10 @@ export class UserService {
 
       const response = {
         message: 'User logged out successfully',
-        // You can include additional data if needed
       };
 
       return response;
     } catch (error) {
-      // Handle errors appropriately
       throw new BadRequestException('Failed to logout');
     }
   }
@@ -169,13 +165,13 @@ export class UserService {
     }
   }
   async create(createUserDto: CreateUserDto) {
-    const { password, confirm_password, phone } = createUserDto;
+    const { password, confirm_password, phone_number } = createUserDto;
     console.log(password);
 
     if (password !== confirm_password) {
       throw new BadRequestException('Passwords do not match');
     }
-    await this.sendSms(phone);
+    await this.sendSms(phone_number);
     try {
       const hashed_password = await bcrypt.hash(password, 7);
       const newUser = this.userRepository.create({

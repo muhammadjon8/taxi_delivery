@@ -26,29 +26,41 @@ import { UserService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UserService) {}
 
-  @ApiOperation({ summary: 'bu yerda post qilinadi' })
+  @ApiOperation({ summary: 'Create a new user' })
   @ApiResponse({
     status: 201,
-    description: 'The post created.',
+    description: 'The user has been successfully created.',
     type: User,
   })
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
+
+  @ApiOperation({ summary: 'Generate a token' })
+  @ApiResponse({
+    status: 201,
+    description: 'The token has been successfully generated.',
+  })
   @Post('token')
   async getToken() {
     return await this.usersService.getToken();
   }
+
+  @ApiOperation({ summary: 'Send an SMS to the user' })
+  @ApiResponse({
+    status: 201,
+    description: 'The SMS has been successfully sent.',
+  })
   @Post('sms')
   async sendSms(@Body('phone') phone: string) {
     return await this.usersService.sendSms(phone);
   }
 
-  @ApiOperation({ summary: 'bu yerda login  qilinadi' })
+  @ApiOperation({ summary: 'User login' })
   @ApiResponse({
     status: 201,
-    description: 'The login  created.',
+    description: 'The user has been successfully logged in.',
     type: Driver,
   })
   @Post('login')
@@ -59,10 +71,10 @@ export class UsersController {
     return this.usersService.login(loginDto, res);
   }
 
-  @ApiOperation({ summary: 'bu yerda logout qilinadi' })
+  @ApiOperation({ summary: 'User logout' })
   @ApiResponse({
     status: 201,
-    description: 'The logout qilinadi.',
+    description: 'The user has been successfully logged out.',
     type: Driver,
   })
   @UseGuards(UserGuard)
@@ -74,22 +86,22 @@ export class UsersController {
     return this.usersService.logout(refreshToken, res);
   }
 
-  @ApiOperation({ summary: 'bu yerda getALL qilinadi' })
+  @ApiOperation({ summary: 'Get all users' })
   @ApiResponse({
     status: 200,
-    description: 'The getALL created.',
+    description: 'Retrieved all users successfully.',
     type: [Driver],
   })
-  @UseGuards(AdminGuard)
+  // @UseGuards(AdminGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
-  @ApiOperation({ summary: 'bu get qilinadi' })
+  @ApiOperation({ summary: 'Get a user by ID' })
   @ApiResponse({
     status: 200,
-    description: 'The get created.',
+    description: 'Retrieved the user successfully.',
     type: Driver,
   })
   @UseGuards(AdminGuard)
@@ -98,10 +110,10 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
-  @ApiOperation({ summary: 'bu yerda putch qilinadi' })
+  @ApiOperation({ summary: 'Update a user by ID' })
   @ApiResponse({
     status: 201,
-    description: 'The putch created.',
+    description: 'The user has been successfully updated.',
     type: Driver,
   })
   @UseGuards(UserGuard)
@@ -110,10 +122,10 @@ export class UsersController {
     return this.usersService.update(+id, updateUserDto);
   }
 
-  @ApiOperation({ summary: 'bu yerda deleted qilinadi' })
+  @ApiOperation({ summary: 'Delete a user by ID' })
   @ApiResponse({
     status: 200,
-    description: 'The post deleted.',
+    description: 'The user has been successfully deleted.',
     type: Driver,
   })
   @UseGuards(UserGuard)

@@ -1,28 +1,40 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsEmail,
+  IsBoolean,
+  IsDate,
   IsNotEmpty,
-  IsPhoneNumber,
+  IsNumber,
+  IsOptional,
   IsString,
-  IsStrongPassword,
 } from 'class-validator';
 
-export class CreateUserDto {
+export class CreateBalanceDto {
+  @ApiProperty({ example: 2, description: 'Amount in the balance' })
   @IsString()
   @IsNotEmpty()
-  name: string;
+  amount: string;
 
+  @ApiProperty({
+    example: '10.07.2024',
+    description: 'Date of transfer',
+  })
   @IsString()
   @IsNotEmpty()
-  @IsPhoneNumber('UZ')
-  phone: string;
+  transfer_date: string;
 
-  @IsStrongPassword()
+  @ApiProperty({
+    example: true,
+    description: 'Type of transfer',
+  })
+  @IsBoolean()
   @IsNotEmpty()
-  password: string;
+  transfer_type: boolean;
 
-  @IsNotEmpty()
-  confirm_password: string;
-
-  @IsNotEmpty()
-  is_active: boolean;
+  @ApiProperty({
+    example: 'AA6470311',
+    description: 'Id of the driver',
+  })
+  @IsString()
+  @IsOptional()
+  driver_id?: string;
 }
