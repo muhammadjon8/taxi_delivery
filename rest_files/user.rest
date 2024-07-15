@@ -1,0 +1,10 @@
+#token request for eskiz
+POST http://localhost:3000/api/users/sms
+Content-Type: application/json
+
+{
+  "phone": "998930894182"
+}
+###
+
+POST http://localhost:3000/api/users/token

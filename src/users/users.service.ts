@@ -13,6 +13,8 @@ import * as bcrypt from 'bcrypt';
 import { UserLoginDto } from './dto/login.dto';
 import { Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
+import { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 @Injectable()
 export class UserService {
@@ -114,14 +116,66 @@ export class UserService {
       throw new BadRequestException('Failed to logout');
     }
   }
+  async getToken(): Promise<string> {
+    try {
+      const formData = new FormData();
+      formData.append('email', 'umuhammadjon22@gmail.com');
+      formData.append('password', '7ki8uTxViB8yURD7UmwpeQLmTsgD7SduvpnTVIP2');
 
+      const response = await axios.post(
+        'https://notify.eskiz.uz/api/auth/login',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      );
+
+      const token = response.data.data.token;
+      console.log('Token:', token);
+      return token;
+    } catch (error) {
+      console.error('Error fetching token:', error);
+      throw error;
+    }
+  }
+
+  async sendSms(phone: string): Promise<void> {
+    try {
+      const response = await axios.post(
+        'https://notify.eskiz.uz/api/message/sms/send',
+        {
+          mobile_phone: phone,
+          message: 'Bu Eskiz dan test',
+          from: '4546',
+          callback_url: 'http://0000.uz/test.php',
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.SMS_TOKEN}`,
+          },
+        },
+      );
+
+      // if (response.data.status !== 'success') {
+      //   throw new Error('Error sending SMS');
+      // }
+
+      console.log('SMS sent:', response.data);
+    } catch (error) {
+      console.error('Error sending SMS:', error);
+      throw new Error('Failed to send SMS');
+    }
+  }
   async create(createUserDto: CreateUserDto) {
-    const { password, confirm_password } = createUserDto;
+    const { password, confirm_password, phone } = createUserDto;
     console.log(password);
 
     if (password !== confirm_password) {
       throw new BadRequestException('Passwords do not match');
     }
+    await this.sendSms(phone);
     try {
       const hashed_password = await bcrypt.hash(password, 7);
       const newUser = this.userRepository.create({
