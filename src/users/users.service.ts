@@ -116,30 +116,30 @@ export class UserService {
       throw new BadRequestException('Failed to logout');
     }
   }
-  async getToken(): Promise<string> {
-    try {
-      const formData = new FormData();
-      formData.append('email', 'umuhammadjon22@gmail.com');
-      formData.append('password', '7ki8uTxViB8yURD7UmwpeQLmTsgD7SduvpnTVIP2');
+  // async getToken(): Promise<string> {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('email', 'umuhammadjon22@gmail.com');
+  //     formData.append('password', '7ki8uTxViB8yURD7UmwpeQLmTsgD7SduvpnTVIP2');
 
-      const response = await axios.post(
-        'https://notify.eskiz.uz/api/auth/login',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        },
-      );
+  //     const response = await axios.post(
+  //       'https://notify.eskiz.uz/api/auth/login',
+  //       formData,
+  //       {
+  //         headers: {
+  //           'Content-Type': 'multipart/form-data',
+  //         },
+  //       },
+  //     );
 
-      const token = response.data.data.token;
-      console.log('Token:', token);
-      return token;
-    } catch (error) {
-      console.error('Error fetching token:', error);
-      throw error;
-    }
-  }
+  //     const token = response.data.data.token;
+  //     console.log('Token:', token);
+  //     return token;
+  //   } catch (error) {
+  //     console.error('Error fetching token:', error);
+  //     throw error;
+  //   }
+  // }
 
   async sendSms(phone: string): Promise<void> {
     try {
