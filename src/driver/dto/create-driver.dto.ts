@@ -1,19 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsString } from 'class-validator';
 
 export class CreateDriverDto {
   @ApiProperty({ example: 'driver name' })
   @IsString()
   name: string;
 
-  @ApiProperty({ example: 'suranme example' })
-  surname: string;
   @ApiProperty({ example: '23' })
   @IsNumber()
   age: number;
+
   @ApiProperty({ example: '+99893 089 -41 -82' })
   @IsString()
   phone: string;
+
   @ApiProperty({ example: 'photo example' })
   @IsString()
   photo: string;
@@ -27,10 +27,10 @@ export class CreateDriverDto {
   prava: string;
 
   @ApiProperty({ example: 'isActive description' })
-  @IsString()
+  @IsBoolean()
   isActive: boolean;
 
   @ApiProperty({ example: 'number description' })
-  @IsString()
+  @IsNumber()
   total_balance: number;
 }

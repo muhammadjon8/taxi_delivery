@@ -121,7 +121,6 @@ export class UserService {
       const formData = new FormData();
       formData.append('email', 'umuhammadjon22@gmail.com');
       formData.append('password', '7ki8uTxViB8yURD7UmwpeQLmTsgD7SduvpnTVIP2');
-
       const response = await axios.post(
         'https://notify.eskiz.uz/api/auth/login',
         formData,
