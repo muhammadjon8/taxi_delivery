@@ -36,10 +36,10 @@ export class UsersController {
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
-  @Post('token')
-  async getToken() {
-    return await this.usersService.getToken();
-  }
+  // @Post('token')
+  // async getToken() {
+  //   return await this.usersService.getToken();
+  // }
   @Post('sms')
   async sendSms(@Body('phone') phone: string) {
     return await this.usersService.sendSms(phone);
