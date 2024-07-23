@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
-import * as FormData from 'form-data';
 import * as otpGenerator from 'otp-generator';
 import { Repository } from 'typeorm';
 import { AddMinutesToDate } from '../common/helpers/addMinutes';
@@ -71,44 +70,26 @@ export class DriverService {
     const existingDriver = await this.driverRepository.findOne({
       where: { phone },
     });
+    console.log('phone', phone);
+
     if (!existingDriver) {
       try {
-        let token = '';
-        // await axios
-        //   .post('notify.eskiz.uz/api/auth/login', {
-        //     email: 'bekzodtoxtamuratov@gmail.com',
-        //     password: 'HAc32ZLTNjQ26zvPsxuPCtMQO20JMNcGyPoGBEG3',
-        //   })
-        //   .then((res) => {
-        //     token = res.data.access_token;
-        //     console.log('res', res);
-        //   })
-        //   .catch((err) => {
-        //     console.log('error login =>', err);
-        //   });
-        const formData = new FormData();
-        formData.append('mobile_phone', '998930894182');
-        formData.append('message', `Bu Eskiz dan test`);
-        formData.append('from', '4546');
-
-        // let resp;
-
-        await axios
-          .post('https://notify.eskiz.uz/api/message/sms/send', formData, {
-            headers: {
-              Authorization: `{token}`,
-            },
-          })
-          .then((res) => {
-            resp = res.data;
-          })
-          .catch((err) => {
-            console.log('error send =>', err);
-          });
-        console.log('Resp test', resp);
+        console.log('SMS_TOKEN:', process.env.SMS_TOKEN);
+        const resp = await axios.post(
+          'https://notify.eskiz.uz/api/message/sms/send',
+          {
+            mobile_phone: '998930894182',
+            phone: '998930894182',
+            message: `Bu Eskiz dan test`,
+            from: '4546',
+          },
+          { headers: { Authorization: `Bearer ${process.env.SMS_TOKEN}` } },
+        );
+        console.log('SMS API Response:', resp.data);
         if (resp.status !== 200) {
           throw new ServiceUnavailableException('Error sending OTP');
         }
+
         const now = new Date();
         const expiration_time = AddMinutesToDate(now, 5);
 
@@ -118,7 +99,10 @@ export class DriverService {
           check: phone,
           verified: false,
         });
+        console.log('newOtp:', newOtp);
+
         await this.otpRepository.save(newOtp);
+
         const details = {
           timestamp: now,
           check: phone,
@@ -132,6 +116,7 @@ export class DriverService {
           message: 'OTP sent successfully',
         };
       } catch (error) {
+        // console.log('error sending OTP', error);
         if (error.response && error.response.status === 401) {
           throw new ServiceUnavailableException(
             'Unauthorized: Invalid SMS token',
