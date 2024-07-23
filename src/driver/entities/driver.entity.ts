@@ -2,10 +2,9 @@ import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @ApiTags('Driver')
-@Entity("driver")
+@Entity('driver')
 export class Driver {
-
-  @ApiProperty({ example: 1, description: "Car 's ID" })
+  @ApiProperty({ example: 1, description: "Driver's ID" })
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -13,26 +12,26 @@ export class Driver {
   @Column()
   name: string;
 
-  @ApiProperty({ example: 'Suraname example', description: 'surname' })
-  @Column()
-  surname: string;
+  // @ApiProperty({ example: 'Surname example', description: 'surname' })
+  // @Column()
+  // surname: string;
 
   @ApiProperty({
     example: '25',
     description: 'age description',
   })
-  @Column()
+  @Column('int')
   age: number;
 
-  @ApiProperty({ description: 'phone desctiption' })
+  @ApiProperty({ description: 'phone description' })
   @Column()
   phone: string;
 
-  @ApiProperty({ description: 'photo car' })
+  @ApiProperty({ description: 'photo description' })
   @Column()
   photo: string;
 
-  @ApiProperty({ description: 'password description' })
+  @ApiProperty({ description: 'passport description' })
   @Column()
   passport: string;
 
@@ -41,10 +40,10 @@ export class Driver {
   prava: string;
 
   @ApiProperty({ description: 'isActive description' })
-  @Column()
+  @Column('boolean')
   isActive: boolean;
 
   @ApiProperty({ description: 'total_balance description' })
-  @Column()
+  @Column('float')
   total_balance: number;
 }

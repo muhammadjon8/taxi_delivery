@@ -4,17 +4,16 @@ import {
   NotFoundException,
   Res,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { User } from './entities/user.entity'; // Assuming you have a User entity
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import * as bcrypt from 'bcrypt';
-import { UserLoginDto } from './dto/login.dto';
-import { Response } from 'express';
 import { JwtService } from '@nestjs/jwt';
-import { AxiosResponse } from 'axios';
+import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
+import * as bcrypt from 'bcrypt';
+import { Response } from 'express';
+import { Repository } from 'typeorm';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UserLoginDto } from './dto/login.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
@@ -23,11 +22,9 @@ export class UserService {
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
   ) {}
-  async getTokens(user: User) {
-    const payload = {
-      id: user.id,
-      is_active: user.isActive,
-    };
+
+  private async getTokens(user: User) {
+    const payload = { id: user.id, is_active: user.isActive };
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload, {
@@ -40,106 +37,74 @@ export class UserService {
       }),
     ]);
 
-    return {
-      accessToken,
-      refreshToken,
-    };
+    return { accessToken, refreshToken };
   }
 
   async login(loginDto: UserLoginDto, @Res() res: Response) {
-    try {
-      const user = await this.userRepository.findOne({
-        where: { phone_number: loginDto.phone },
-      });
+    const user = await this.userRepository.findOne({
+      where: { phone_number: loginDto.phone },
+    });
 
-      if (!user) {
-        throw new BadRequestException('Invalid credentials');
-      }
-
-      const passwordMatch = await bcrypt.compare(
-        loginDto.password,
-        user.password,
-      );
-
-      if (!passwordMatch) {
-        throw new BadRequestException('Invalid credentials');
-      }
-
-      const tokens = await this.getTokens(user);
-
-      // Update the refresh token in the database
-      await this.userRepository.update(user.id, {
-        refreshToken: tokens.refreshToken,
-      });
-
-      // Set the refresh token as a cookie in the response
-      res.cookie('refresh_token', tokens.refreshToken, {
-        maxAge: Number(process.env.COOKIE_TIME),
-        httpOnly: true,
-      });
-
-      return { tokens, message: 'Login successful' };
-    } catch (error) {
-      throw new BadRequestException(error.message);
+    if (!user || !(await bcrypt.compare(loginDto.password, user.password))) {
+      throw new BadRequestException('Invalid credentials');
     }
+
+    const tokens = await this.getTokens(user);
+
+    await this.userRepository.update(user.id, {
+      refreshToken: tokens.refreshToken,
+    });
+
+    res.cookie('refresh_token', tokens.refreshToken, {
+      maxAge: Number(process.env.COOKIE_TIME),
+      httpOnly: true,
+    });
+
+    return { tokens, message: 'Login successful' };
   }
 
   async logout(refreshToken: string, res: Response) {
+    const userData = await this.jwtService.verifyAsync(refreshToken, {
+      secret: process.env.REFRESH_TOKEN_KEY,
+    });
+
+    if (!userData) {
+      throw new BadRequestException('User not verified');
+    }
+
+    const updatedUser = await this.userRepository.update(
+      { id: userData.id },
+      { refreshToken: null },
+    );
+
+    if (updatedUser.affected === 0) {
+      throw new BadRequestException('User not found or not updated');
+    }
+
+    res.clearCookie('refresh_token');
+    return { message: 'User logged out successfully' };
+  }
+
+  async getToken(): Promise<string> {
     try {
-      const userData = await this.jwtService.verify(refreshToken, {
-        secret: process.env.REFRESH_TOKEN_KEY,
-      });
+      const formData = new FormData();
+      formData.append('email', 'umuhammadjon22@gmail.com');
+      formData.append('password', '7ki8uTxViB8yURD7UmwpeQLmTsgD7SduvpnTVIP2');
 
-      if (!userData) {
-        throw new BadRequestException('User not verified');
-      }
-
-      const updatedUser = await this.userRepository.update(
-        { id: userData.id },
-        { refreshToken: null },
+      const response = await axios.post(
+        'https://notify.eskiz.uz/api/auth/login',
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        },
       );
 
-      if (updatedUser.affected === 0) {
-        throw new BadRequestException('User not found or not updated');
-      }
-
-      res.clearCookie('refresh_token');
-
-      const response = {
-        message: 'User logged out successfully',
-        // You can include additional data if needed
-      };
-
-      return response;
+      return response.data.data.token;
     } catch (error) {
-      // Handle errors appropriately
-      throw new BadRequestException('Failed to logout');
+      console.error('Error fetching token:', error);
+      throw error;
     }
   }
-  // async getToken(): Promise<string> {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('email', 'umuhammadjon22@gmail.com');
-  //     formData.append('password', '7ki8uTxViB8yURD7UmwpeQLmTsgD7SduvpnTVIP2');
-
-  //     const response = await axios.post(
-  //       'https://notify.eskiz.uz/api/auth/login',
-  //       formData,
-  //       {
-  //         headers: {
-  //           'Content-Type': 'multipart/form-data',
-  //         },
-  //       },
-  //     );
-
-  //     const token = response.data.data.token;
-  //     console.log('Token:', token);
-  //     return token;
-  //   } catch (error) {
-  //     console.error('Error fetching token:', error);
-  //     throw error;
-  //   }
-  // }
 
   async sendSms(phone: string): Promise<void> {
     try {
@@ -151,16 +116,8 @@ export class UserService {
           from: '4546',
           callback_url: 'http://0000.uz/test.php',
         },
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.SMS_TOKEN}`,
-          },
-        },
+        { headers: { Authorization: `Bearer ${process.env.SMS_TOKEN}` } },
       );
-
-      // if (response.data.status !== 'success') {
-      //   throw new Error('Error sending SMS');
-      // }
 
       console.log('SMS sent:', response.data);
     } catch (error) {
@@ -168,34 +125,27 @@ export class UserService {
       throw new Error('Failed to send SMS');
     }
   }
-  async create(createUserDto: CreateUserDto) {
-    const { password, confirm_password, phone } = createUserDto;
-    console.log(password);
 
-    if (password !== confirm_password) {
+  async create(createUserDto: CreateUserDto) {
+    if (createUserDto.password !== createUserDto.confirm_password) {
       throw new BadRequestException('Passwords do not match');
     }
-    await this.sendSms(phone);
-    try {
-      const hashed_password = await bcrypt.hash(password, 7);
-      const newUser = this.userRepository.create({
-        ...createUserDto,
-        password: hashed_password,
-      });
 
-      const savedUser = await this.userRepository.save(newUser);
+    await this.sendSms(createUserDto.phone);
 
-      const tokens = await this.getTokens(savedUser);
-      const hashed_refresh_token = await bcrypt.hash(tokens.refreshToken, 7);
+    const hashed_password = await bcrypt.hash(createUserDto.password, 7);
+    const newUser = this.userRepository.create({
+      ...createUserDto,
+      password: hashed_password,
+    });
 
-      savedUser.refreshToken = hashed_refresh_token;
+    const savedUser = await this.userRepository.save(newUser);
+    const tokens = await this.getTokens(savedUser);
+    savedUser.refreshToken = await bcrypt.hash(tokens.refreshToken, 7);
 
-      const updatedUser = await this.userRepository.save(savedUser);
+    await this.userRepository.save(savedUser);
 
-      return { data: 'User created successfully', tokens: tokens };
-    } catch (e) {
-      return { error: e.message };
-    }
+    return { data: 'User created successfully', tokens };
   }
 
   async findAll() {
@@ -203,37 +153,25 @@ export class UserService {
   }
 
   async findOne(id: number) {
-    try {
-      const user = await this.userRepository.findOne({
-        where: { id },
-      });
-      if (!user) {
-        throw new NotFoundException(`User with ID ${id} not found`);
-      }
-      return user;
-    } catch (e) {
-      return { error: e.message };
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
     }
+    return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    try {
-      const { password } = updateUserDto;
-      const hashed_password = await bcrypt.hash(password, 7);
-      await this.userRepository.update(
-        { id },
-        { ...updateUserDto, password: hashed_password },
-      );
-      return this.findOne(id);
-    } catch (e) {
-      return { error: e.message };
-    }
+    const hashed_password = await bcrypt.hash(updateUserDto.password, 7);
+    await this.userRepository.update(
+      { id },
+      { ...updateUserDto, password: hashed_password },
+    );
+    return this.findOne(id);
   }
 
   async remove(id: number) {
     const userToRemove = await this.findOne(id);
     if ('error' in userToRemove) {
-      // User not found, return the error
       return userToRemove;
     }
     return this.userRepository.remove([userToRemove]);
