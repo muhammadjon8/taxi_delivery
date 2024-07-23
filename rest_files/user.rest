@@ -1,5 +1,5 @@
 #token request for eskiz
-POST http://localhost:3000/api/users/sms
+POST https://45.130.148.194:3000/api/users/sms
 Content-Type: application/json
 
 {

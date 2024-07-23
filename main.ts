@@ -16,6 +16,12 @@ async function start() {
     .setVersion('1.0')
     .addTag('taxi_delivery')
     .build();
+  app.enableCors({
+    origin: ['*'], // Replace with your allowed origins
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Specify allowed methods
+    allowedHeaders: 'Content-Type, Accept, Authorization', // Specify allowed headers
+    credentials: true, // Allow cookies to be sent with requests
+  });
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
   app.use(cookieParser());
