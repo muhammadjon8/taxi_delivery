@@ -46,4 +46,8 @@ export class Driver {
   @ApiProperty({ description: 'total_balance description' })
   @Column('float')
   total_balance: number;
+
+  @ApiProperty({ description: 'total_balance description' })
+  @Column()
+  otp: string;
 }

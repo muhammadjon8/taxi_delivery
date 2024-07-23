@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Patch,
   Post,
@@ -12,12 +13,22 @@ import { DriverService } from './driver.service';
 import { CreateDriverDto } from './dto/create-driver.dto';
 import { UpdateDriverDto } from './dto/update-driver.dto';
 import { Driver } from './entities/driver.entity';
+import { PhoneDriverDto } from './dto/phone-driver.dto'
 
 
-@ApiTags("driver")
+@ApiTags('driver')
 @Controller('driver')
 export class DriverController {
   constructor(private readonly driverService: DriverService) {}
+
+  @HttpCode(200)
+  @Post('newOtp')
+  @ApiOperation({ summary: 'Generate new OTP' })
+  @ApiResponse({ status: 200, description: 'OTP generated successfully.' })
+  @ApiResponse({ status: 400, description: 'Bad Request.' })
+  newOtp(@Body() phoneUserDto: PhoneDriverDto) {
+    return this.driverService.newOtp(phoneUserDto);
+  }
 
   @ApiOperation({ summary: 'bu yerda post qilinadi' })
   @ApiResponse({
