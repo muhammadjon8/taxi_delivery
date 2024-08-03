@@ -66,7 +66,6 @@ export class DriverService {
       lowerCaseAlphabets: false,
       specialChars: false,
     });
-
     const existingDriver = await this.driverRepository.findOne({
       where: { phone },
     });

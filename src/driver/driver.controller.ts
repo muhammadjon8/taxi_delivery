@@ -11,10 +11,9 @@ import {
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { DriverService } from './driver.service';
 import { CreateDriverDto } from './dto/create-driver.dto';
+import { PhoneDriverDto } from './dto/phone-driver.dto';
 import { UpdateDriverDto } from './dto/update-driver.dto';
 import { Driver } from './entities/driver.entity';
-import { PhoneDriverDto } from './dto/phone-driver.dto'
-
 
 @ApiTags('driver')
 @Controller('driver')
