@@ -13,16 +13,46 @@ import { CreateDriverDto } from './dto/create-driver.dto';
 import { UpdateDriverDto } from './dto/update-driver.dto';
 import { Driver } from './entities/driver.entity';
 
-
-@ApiTags("driver")
+@ApiTags('driver')
 @Controller('driver')
 export class DriverController {
   constructor(private readonly driverService: DriverService) {}
 
-  @ApiOperation({ summary: 'bu yerda post qilinadi shunaqa' })
+  @ApiOperation({ summary: 'Register a new driver' })
   @ApiResponse({
     status: 201,
-    description: 'The post created.',
+    description: 'The driver has been successfully registered.',
+    type: Driver,
+  })
+  @Post('register')
+  register(@Body() createDriverDto: CreateDriverDto) {
+    return this.driverService.register(createDriverDto);
+  }
+
+  @ApiOperation({ summary: 'Log in a driver' })
+  @ApiResponse({
+    status: 200,
+    description: 'The driver has been successfully logged in.',
+  })
+  @Post('login')
+  login(@Body() loginDto: { phone: string; password: string }) {
+    return this.driverService.login(loginDto.phone, loginDto.password);
+  }
+
+  @ApiOperation({ summary: 'Log out a driver' })
+  @ApiResponse({
+    status: 200,
+    description: 'The driver has been successfully logged out.',
+  })
+  @Post('logout')
+  logout(@Body() logoutDto: { refreshToken: string }) {
+    return this.driverService.logout(logoutDto.refreshToken);
+  }
+
+  @ApiOperation({ summary: 'Create a new driver' })
+  @ApiResponse({
+    status: 201,
+    description: 'The driver has been successfully created.',
     type: Driver,
   })
   @Post()
@@ -30,10 +60,10 @@ export class DriverController {
     return this.driverService.create(createDriverDto);
   }
 
-  @ApiOperation({ summary: 'bu yerda getALL qilinadi' })
+  @ApiOperation({ summary: 'Get all drivers' })
   @ApiResponse({
     status: 200,
-    description: 'The getALL created.',
+    description: 'Returns all drivers.',
     type: [Driver],
   })
   @Get()
@@ -41,10 +71,10 @@ export class DriverController {
     return this.driverService.findAll();
   }
 
-  @ApiOperation({ summary: 'bu yerda getbyID qilinadi' })
+  @ApiOperation({ summary: 'Get a driver by ID' })
   @ApiResponse({
     status: 200,
-    description: 'The getbyiD ',
+    description: 'Returns a driver by ID.',
     type: Driver,
   })
   @Get(':id')
@@ -52,10 +82,10 @@ export class DriverController {
     return this.driverService.findOne(+id);
   }
 
-  @ApiOperation({ summary: 'bu yerda updatebyID qilinadi' })
+  @ApiOperation({ summary: 'Update a driver by ID' })
   @ApiResponse({
     status: 200,
-    description: 'The upadatebyiD ',
+    description: 'Updates a driver by ID.',
     type: Driver,
   })
   @Patch(':id')
@@ -63,10 +93,10 @@ export class DriverController {
     return this.driverService.update(+id, updateDriverDto);
   }
 
-  @ApiOperation({ summary: 'bu yerda deletebyID qilinadi' })
+  @ApiOperation({ summary: 'Delete a driver by ID' })
   @ApiResponse({
     status: 200,
-    description: 'The deletebyiD ',
+    description: 'Deletes a driver by ID.',
     type: Driver,
   })
   @Delete(':id')

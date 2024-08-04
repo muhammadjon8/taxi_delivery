@@ -8,42 +8,43 @@ export class Driver {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ example: "Driver's name", description: "driver's name" })
+  @ApiProperty({ example: "Driver's name", description: "Driver's name" })
   @Column()
   name: string;
 
-  // @ApiProperty({ example: 'Surname example', description: 'surname' })
-  // @Column()
-  // surname: string;
-
-  @ApiProperty({
-    example: '25',
-    description: 'age description',
-  })
+  @ApiProperty({ example: '25', description: 'Driver’s age' })
   @Column('int')
   age: number;
 
-  @ApiProperty({ description: 'phone description' })
+  @ApiProperty({ description: 'Driver’s phone number' })
   @Column()
   phone: string;
 
-  @ApiProperty({ description: 'photo description' })
+  @ApiProperty({ description: 'Driver’s photo' })
   @Column()
   photo: string;
 
-  @ApiProperty({ description: 'passport description' })
+  @ApiProperty({ description: 'Driver’s passport information' })
   @Column()
   passport: string;
 
-  @ApiProperty({ description: 'prava description' })
+  @ApiProperty({ description: 'Driver’s prava (license) information' })
   @Column()
   prava: string;
 
-  @ApiProperty({ description: 'isActive description' })
+  @ApiProperty({ description: 'Driver’s active status' })
   @Column('boolean')
   isActive: boolean;
 
-  @ApiProperty({ description: 'total_balance description' })
+  @ApiProperty({ description: 'Driver’s total balance' })
   @Column('float')
   total_balance: number;
+
+  @ApiProperty({ description: 'Driver’s password' })
+  @Column()
+  password: string;
+
+  @ApiProperty({ description: 'Driver’s refresh token' })
+  @Column({ nullable: true })
+  refreshToken?: string; // Add this line to include the refreshToken field
 }

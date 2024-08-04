@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsString, MinLength } from 'class-validator';
 
 export class CreateDriverDto {
   @ApiProperty({ example: 'driver name' })
@@ -33,4 +33,14 @@ export class CreateDriverDto {
   @ApiProperty({ example: 'number description' })
   @IsNumber()
   total_balance: number;
+
+  @ApiProperty({ example: 'securePassword123' })
+  @IsString()
+  @MinLength(6)
+  password: string;
+
+  @ApiProperty({ example: 'securePassword123' })
+  @IsString()
+  @MinLength(6)
+  confirm_password: string;
 }
