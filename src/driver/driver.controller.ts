@@ -17,7 +17,7 @@ import { Driver } from './entities/driver.entity';
 export class DriverController {
   constructor(private readonly driverService: DriverService) {}
 
-  @ApiOperation({ summary: 'bu yerda post qilinadi' })
+  @ApiOperation({ summary: 'bu yerda post qilinadi shunaqa' })
   @ApiResponse({
     status: 201,
     description: 'The post created.',
