@@ -108,7 +108,7 @@ export class DriverService {
       if (!driver) {
         throw new NotFoundException(`Driver with ID ${id} not found`);
       }
-      return driver;
+      return driver;``
     } catch (e) {
       return { error: e.message };
     }
